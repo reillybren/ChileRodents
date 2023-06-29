@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Ectoparasite Sharing and Range</title>
+
+<script src="site_libs/header-attrs-2.21/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Spillover risk in a host-ectoparasite network</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">About</a>
+</li>
+<li>
+  <a href="Maps.html">Rodent Richness Maps</a>
+</li>
+<li>
+  <a href="Phylogeny.html">Rodent Phylogeny</a>
+</li>
+<li>
+  <a href="GeoProb.html">Ectoparasite Sharing: Geographic Range</a>
+</li>
+<li>
+  <a href="GenProb.html">Ectoparasite Sharing: Phylogenetic Relatedness</a>
+</li>
+<li>
+  <a href="Network.html">Rodent-Ectoparasite Network</a>
+</li>
+<li>
+  <a href="Mantel.html">Network Analysis: Mantel Tests</a>
+</li>
+<li>
+  <a href="Closcen.html">Network Analysis: Closeness Centrality</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Ectoparasite Sharing and Range</h1>
+
+</div>
+
+
+<p><strong>Purpose</strong>: Calculate the probability for rodent
+species to share ectoparasites based on geographic range overlap and
+distance.</p>
+<p>Load packages and files. Calculating the overlap and range distance
+matrices was done in the map making section.</p>
+<pre class="r"><code>library(dplyr)
+library(geotax)
+library(reshape2)
+library(ggplot2)
+
+geopairs&lt;- read.csv(&quot;./GeoProb/RodPar.csv&quot;, header=TRUE) #Rodent-Parasite pairs
+geo&lt;- read.csv(&quot;./GeoProb/OverlapMatrix.csv&quot;, header=TRUE, row.names=1) #range overlap matrix
+print(geo[1:3, 1:3])</code></pre>
+<pre><code>##                       Ctenomys.maulinus Reithrodon.auritus
+## Ctenomys maulinus                     1          0.0000000
+## Reithrodon auritus                    0          1.0000000
+## Loxodontomys micropus                 1          0.5139376
+##                       Loxodontomys.micropus
+## Ctenomys maulinus                 0.1722481
+## Reithrodon auritus                0.1475845
+## Loxodontomys micropus             1.0000000</code></pre>
+<pre class="r"><code>cent &lt;- read.csv(&quot;./GeoProb/CentroidDist.csv&quot;,header= TRUE, row.names=1) #range centroid distance matrix
+print(cent[1:3,1:3])</code></pre>
+<pre><code>##                       Ctenomys.maulinus Reithrodon.auritus
+## Ctenomys maulinus              0.000000           13.55491
+## Reithrodon auritus            13.554908            0.00000
+## Loxodontomys micropus          3.493124           10.14777
+##                       Loxodontomys.micropus
+## Ctenomys maulinus                  3.493124
+## Reithrodon auritus                10.147766
+## Loxodontomys micropus              0.000000</code></pre>
+<p>Clean rodent-parasite pairs to only include rodents with geographic
+range data.</p>
+<pre class="r"><code>print(geopairs[1:10,1:2]) # preview the data</code></pre>
+<pre><code>##            Parasite                Rodent
+## 1  Ixodes abrocomae     Abrocoma bennetti
+## 2  Ixodes abrocomae  Abrothrix longipilis
+## 3  Ixodes abrocomae   Abrothrix olivaceus
+## 4  Ixodes abrocomae Phyllotis xanthopygus
+## 5    Ixodes sigelos     Rattus norvegicus
+## 6    Ixodes sigelos      Octodon bridgesi
+## 7    Ixodes sigelos     Phyllotis darwini
+## 8    Ixodes sigelos      Aconaemys fuscus
+## 9    Ixodes sigelos     Abrocoma bennetti
+## 10   Ixodes sigelos         Octodon degus</code></pre>
+<pre class="r"><code>geopairs&lt;- subset(geopairs, Rodent!=&quot;Cavia porcellus&quot; &amp; Rodent!=&quot;Ctenomys osgoodi&quot; &amp;
+                  Rodent!=&quot;Ctenomys robustus&quot; &amp; Rodent!=&quot;Octomys mimax&quot; &amp;
+                  Rodent!=&quot;Rattus norvegicus&quot; &amp; Rodent!=&quot;Rattus rattus&quot; &amp;
+                  Rodent!= &quot;Ctenomys colburni&quot;)</code></pre>
+<p>Use the GeoTax package to build a binary interaction matrix between
+rodents and ectoparasites and perform a logistic regression on the
+entire dataset and for each ectoparasite.</p>
+<pre class="r"><code>incidence &lt;- get_incidence_matrix(geopairs, returnDataFrame=FALSE) #creates binary interaction matrix
+incidence&lt;- incidence[ ,row.names(geo)]
+incidence&lt;- subset(incidence, rowSums(incidence)&gt;3 ) #filter to only ectoparasites with more than 3 relationships for logistic regression 
+colnames(geo)&lt;- row.names(geo)
+
+coef_all &lt;- log_reg_boostrap(incidence, geo, 1000) #logistic regression for the entire dataset
+coef &lt;- sapply(1:nrow(incidence), function(x)
+  log_reg_boostrap(incidence[x, , drop=F], geo, 1000) ) #log reg for each ectoparasite
+colnames(coef)&lt;- rownames(incidence)</code></pre>
+<p>The overall logistic regression coefficients for range overlap
+3.1413433 and intercept: -2.7741576.</p>
+<p>Now, use the logistic regression coefficients to calculate
+probability vectors.</p>
+<pre class="r"><code>GD    &lt;- seq(0, 1,0.01 ) #vector on which to calculate probabilities
+coefval &lt;- t(coef)[ ,c(1,7)]
+coef_allval&lt;- c(coef_all[[&quot;intercept&quot;]], coef_all[[&quot;slope&quot;]] )
+
+reg &lt;- apply(coefval, 1, function(x) {
+  prob_logit(x, GD)} ) #calculate probabilities for each ectoparasite
+
+reg_all &lt;- prob_logit(coef_allval, GD) #probabilities for overall dataset</code></pre>
+<p>The probability vectors can be used to plot the probability of
+sharing ectoparasites based on range overlap between rodents. First, the
+probability vectors need to be combined with the scale for geographic
+overlap (GD) and then we can plot with ggplot.</p>
+<pre class="r"><code>plotreg&lt;- cbind(reg, GD)
+plotreg&lt;-cbind(plotreg, reg_all)
+plotreg&lt;-as.data.frame(plotreg)
+preg&lt;-  melt(plotreg,  id.vars = &#39;GD&#39;, variable.name = &#39;series&#39;)
+adj_names &lt;- sort(setdiff(unique(preg$series), &quot;reg_all&quot;))
+gg_color_hue &lt;- function(n) {
+  hues = seq(0, 0, length = n)
+  hcl(h = hues, l =80, c = 0)[1:n]
+}
+values &lt;- gg_color_hue(length(adj_names))
+names(values)&lt;- adj_names
+values&lt;- c(values, c(reg_all=&quot;red&quot;))
+
+ggplot(preg, aes(x=GD, y=value, colour=series))+
+  geom_line(show.legend=F)+ theme_minimal()+
+  scale_colour_manual(values=values)+
+  xlab(&quot;Geographic Range Overlap between Rodents&quot;)+
+  ylab(&quot;Probability of Sharing Ectoparasites&quot;)</code></pre>
+<p><img src="GeoProb_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Now time to look at the geographic distance (#2), doing the same
+analysis:</p>
+<pre class="r"><code>incidence2 &lt;- get_incidence_matrix(geopairs, returnDataFrame=FALSE)
+incidence2&lt;- incidence2[, row.names(cent)]
+incidence2&lt;- subset(incidence2, rowSums(incidence2)&gt;3 )
+colnames(cent)&lt;-row.names(cent)
+
+coef_all2 &lt;- log_reg_boostrap(incidence2, cent, 1000)
+coef2 &lt;- sapply(1:nrow(incidence2), function(x)
+  log_reg_boostrap(incidence2[x, , drop=F], cent, 1000) )
+colnames(coef2)&lt;- rownames(incidence2)
+
+GD2  &lt;- seq(0, 36, 0.5 )
+coefval2 &lt;- t(coef2)[ ,c(1,7)]
+coef_allval2&lt;- c(coef_all2[[&quot;intercept&quot;]], coef_all2[[&quot;slope&quot;]] )
+reg2 &lt;- apply(coefval2, 1, function(x) {
+  prob_logit(x, GD2)} )
+reg_all2 &lt;- prob_logit(coef_allval2, GD2)</code></pre>
+<p>The overall logistic regression coefficients for range distance are
+-0.152196 and intercept: -0.6194606.</p>
+<p>The probability vectors can be used to plot the probability of
+sharing ectoparasites based geographic range distance between
+rodents:</p>
+<pre class="r"><code>plotreg2&lt;- cbind(reg2, GD2)
+plotreg2&lt;-cbind(plotreg2, reg_all2)
+plotreg2&lt;-as.data.frame(plotreg2)
+preg2&lt;-  melt(plotreg2,  id.vars = &#39;GD2&#39;, variable.name = &#39;series&#39;)
+adj_names2 &lt;- sort(setdiff(unique(preg2$series), &quot;reg_all2&quot;))
+gg_color_hue &lt;- function(n) {
+  hues = seq(0, 0, length = n)
+  hcl(h = hues, l =80, c = 0)[1:n]
+}
+values2 &lt;- gg_color_hue(length(adj_names2))
+names(values2)&lt;- adj_names2
+values2&lt;- c(values2, c(reg_all2=&quot;red&quot;))
+
+ggplot(preg2, aes(x=GD2, y=value, colour=series))+
+  geom_line(show.legend=F)+ theme_minimal()+
+  scale_colour_manual(values=values2)+
+  xlab(&quot;Range Distance between Rodents&quot;)+
+  ylab(&quot;Probability of Sharing Ectoparasites&quot;)</code></pre>
+<p><img src="GeoProb_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
