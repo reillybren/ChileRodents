@@ -358,8 +358,8 @@ p_tp&lt;-coef(summary(tplm))[2,4]
 trlm&lt;- glm( Range ~ Total.Relationships, data=cc)
 p_tr&lt;- coef(summary(trlm))[2,4]</code></pre>
 <p>Range has a significant relationship with closeness centrality (p=
-0.0065876), total relationships (p= 1.5202329^{-5}), and total parasites
-(p= 5.5458519^{-6}).</p>
+0.0065876), total relationships (p= 1.6995818^{-5}), and total parasites
+(p= 6.8338911^{-6}).</p>
 <p>Compare total parasites and total relationships per rodent on the
 same plot</p>
 <pre class="r"><code>ratio&lt;- median(cc$Total.Relationships)/ median(cc$Total.Parasites)
@@ -393,7 +393,30 @@ a higher closeness centrality. Now we will use a binomial logistic
 regression model to test this.</p>
 <pre class="r"><code>log&lt;-glm(X ~ closnesscentrality, family= &#39;binomial&#39;, data= cchanta ) #X is a column with 0 and 1 for negative and positive hantavirus status
 R2&lt;- NagelkerkeR2(log)
-p_hanta&lt;- coef(summary(log))[2,4]</code></pre>
+p_hanta&lt;- coef(summary(log))[2,4]
+summary(log)</code></pre>
+<pre><code>## 
+## Call:
+## glm(formula = X ~ closnesscentrality, family = &quot;binomial&quot;, data = cchanta)
+## 
+## Deviance Residuals: 
+##      Min        1Q    Median        3Q       Max  
+## -1.14401  -0.11964  -0.00706  -0.00334   2.35134  
+## 
+## Coefficients:
+##                    Estimate Std. Error z value Pr(&gt;|z|)  
+## (Intercept)          -33.27      13.73  -2.423   0.0154 *
+## closnesscentrality    48.40      20.24   2.391   0.0168 *
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 40.496  on 49  degrees of freedom
+## Residual deviance: 12.234  on 48  degrees of freedom
+## AIC: 16.234
+## 
+## Number of Fisher Scoring iterations: 9</code></pre>
 <p>In the binomial logistic regression model, closeness centrality
 explains 78% of the variance in Hantavirus status among rodents (p=
 0.0168109, R2= 0.7778293)</p>
