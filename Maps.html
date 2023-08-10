@@ -297,7 +297,7 @@ do not have ectoparasites are being excluded and named
 “ectorodents”.</p>
 <pre class="r"><code>rodrange &lt;- read_sf(&quot;./ChileRodentsClipped/mergedChile.shp&quot;, stringsAsFactors = F)
 
-ectorodents &lt;- subset(rodrange, SCI_NAME !=&quot;Akodon iniscatus&quot; &amp; SCI_NAME != &quot;Abrothrix jelskii&quot; 
+ectorodents &lt;- subset(rodrange, SCI_NAME !=&quot;Akodon iniscatus&quot; &amp; SCI_NAME != &quot;Abrothrix jelskii&quot;
                   &amp; SCI_NAME !=&quot;Auliscomys pictus&quot; &amp; SCI_NAME != &quot;Calomys lepidus&quot; 
                   &amp; SCI_NAME !=&quot;Cavia tschudii&quot; &amp; SCI_NAME != &quot;Chelemys megalonyx&quot; 
                   &amp; SCI_NAME !=&quot;Chinchilla chinchilla&quot; &amp; SCI_NAME != &quot;Chinchilla lanigera&quot;
@@ -324,14 +324,14 @@ poly3&lt;-rodrange #all rodents same steps
 rp_rod3&lt;-rasterize(poly3,r)
 chil_map&lt;-mask(rp_rod3, chile)</code></pre>
 <p>Now time to make the maps!</p>
-<pre class="r"><code>color&lt;-colorRampPalette(c(&quot;gray&quot;,&quot;lightblue&quot;,&quot;skyblue&quot;, &quot;darkblue&quot;)) #make a color ramp
+<pre class="r"><code>color&lt;-colorRampPalette(c(&quot;#090387ff&quot;,&quot;#5084d6bb&quot;,&quot;skyblue&quot;,&quot;#fada5fff&quot;, &quot;#aa0000&quot;)) #make a color ramp
 
 par(mfrow=c(1,2)) #split panel into 2
 
-plot(chil_map_ecto, col=color(10), breaks=c(0,5,10,15,20,25,30,35,40,43)
+plot(chil_map_ecto, col=color(9), breaks=c(0,5,10,15,20,25,30,35,40,43)
      ,ext=c(-80, -65, -60, 30), main=&quot;Rodent Species Richness (with ectoparasites)&quot; ) #only with ectoparasites
 
-plot(chil_map, col=color(14), breaks=c(0,5,10,15,20,25,30,35,40,45,50,55,60,65)
+plot(chil_map, col=color(13), breaks=c(0,5,10,15,20,25,30,35,40,45,50,55,60,65)
      ,ext=c(-80, -65, -60, 30), main=&quot;Rodent Species Richness(all)&quot; ) #all rodents</code></pre>
 <p><img src="Maps_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>The next step is to calculate pairwise range overlap between rodent
