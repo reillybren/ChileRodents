@@ -328,7 +328,7 @@ rodents and ectoparasites and perform a logistic regression on the
 entire dataset and for each ectoparasite.</p>
 <pre class="r"><code>incidence &lt;- get_incidence_matrix(genpairs, returnDataFrame=FALSE) ## binary interaction matrix
 incidence&lt;- incidence[ ,colnames(dist)]
-incidence&lt;- subset(incidence, rowSums(incidence)&gt;3) # get rid of rodents with less than 3 ectoparasite associations
+incidence&lt;- subset(incidence, rowSums(incidence)&gt;2) # get rid of rodents with less than 3 ectoparasite associations
 
 coef_all &lt;- log_reg_boostrap(incidence, dist, 1000) # log reg coefs for all ectoparasites
 coef &lt;- sapply(1:nrow(incidence), function(x)
