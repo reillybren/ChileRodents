@@ -337,7 +337,7 @@ rodents and ectoparasites and perform a logistic regression on the
 entire dataset and for each ectoparasite.</p>
 <pre class="r"><code>incidence &lt;- get_incidence_matrix(geopairs, returnDataFrame=FALSE) #creates binary interaction matrix
 incidence&lt;- incidence[ ,row.names(geo)]
-incidence&lt;- subset(incidence, rowSums(incidence)&gt;3 ) #filter to only ectoparasites with more than 3 relationships for logistic regression 
+incidence&lt;- subset(incidence, rowSums(incidence)&gt;2 ) #filter to only ectoparasites with more than 2 relationships for logistic regression 
 colnames(geo)&lt;- row.names(geo)
 
 coef_all &lt;- log_reg_boostrap(incidence, geo, 1000) #logistic regression for the entire dataset
@@ -383,7 +383,7 @@ ggplot(preg, aes(x=GD, y=value, colour=series))+
 analysis:</p>
 <pre class="r"><code>incidence2 &lt;- get_incidence_matrix(geopairs, returnDataFrame=FALSE)
 incidence2&lt;- incidence2[, row.names(cent)]
-incidence2&lt;- subset(incidence2, rowSums(incidence2)&gt;3 )
+incidence2&lt;- subset(incidence2, rowSums(incidence2)&gt;2 )
 colnames(cent)&lt;-row.names(cent)
 
 coef_all2 &lt;- log_reg_boostrap(incidence2, cent, 1000)
