@@ -491,82 +491,15 @@ explains 78% of the variance in Hantavirus status among rodents (p=
 <p>Next, we will use a Phylogenetic logistic regression for binary
 dependent variables to see how strong phylogentic signal is.</p>
 <p>Load packages</p>
-<pre class="r"><code>library(picante)</code></pre>
-<pre><code>## Loading required package: ape</code></pre>
-<pre><code>## Loading required package: vegan</code></pre>
-<pre><code>## Loading required package: permute</code></pre>
-<pre><code>## Loading required package: lattice</code></pre>
-<pre><code>## This is vegan 2.6-4</code></pre>
-<pre><code>## Loading required package: nlme</code></pre>
-<pre class="r"><code>library(ape)
+<pre class="r"><code>library(picante)
+library(ape)
 library(phylotools)
-library(phytools)</code></pre>
-<pre><code>## Loading required package: maps</code></pre>
-<pre><code>## 
-## Attaching package: &#39;phytools&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:vegan&#39;:
-## 
-##     scores</code></pre>
-<pre class="r"><code>library(geotax)
+library(phytools)
+library(geotax)
 library(reshape2)
 library(ggplot2)
 library(phylolm)
 library(ggtree)</code></pre>
-<pre><code>## Registered S3 methods overwritten by &#39;treeio&#39;:
-##   method              from    
-##   MRCA.phylo          tidytree
-##   MRCA.treedata       tidytree
-##   Nnode.treedata      tidytree
-##   Ntip.treedata       tidytree
-##   ancestor.phylo      tidytree
-##   ancestor.treedata   tidytree
-##   child.phylo         tidytree
-##   child.treedata      tidytree
-##   full_join.phylo     tidytree
-##   full_join.treedata  tidytree
-##   groupClade.phylo    tidytree
-##   groupClade.treedata tidytree
-##   groupOTU.phylo      tidytree
-##   groupOTU.treedata   tidytree
-##   is.rooted.treedata  tidytree
-##   nodeid.phylo        tidytree
-##   nodeid.treedata     tidytree
-##   nodelab.phylo       tidytree
-##   nodelab.treedata    tidytree
-##   offspring.phylo     tidytree
-##   offspring.treedata  tidytree
-##   parent.phylo        tidytree
-##   parent.treedata     tidytree
-##   root.treedata       tidytree
-##   rootnode.phylo      tidytree
-##   sibling.phylo       tidytree</code></pre>
-<pre><code>## ggtree v3.6.2 For help: https://yulab-smu.top/treedata-book/
-## 
-## If you use the ggtree package suite in published research, please cite
-## the appropriate paper(s):
-## 
-## Guangchuang Yu, David Smith, Huachen Zhu, Yi Guan, Tommy Tsan-Yuk Lam.
-## ggtree: an R package for visualization and annotation of phylogenetic
-## trees with their covariates and other associated data. Methods in
-## Ecology and Evolution. 2017, 8(1):28-36. doi:10.1111/2041-210X.12628
-## 
-## LG Wang, TTY Lam, S Xu, Z Dai, L Zhou, T Feng, P Guo, CW Dunn, BR
-## Jones, T Bradley, H Zhu, Y Guan, Y Jiang, G Yu. treeio: an R package
-## for phylogenetic tree input and output with richly annotated and
-## associated data. Molecular Biology and Evolution. 2020, 37(2):599-603.
-## doi: 10.1093/molbev/msz240
-## 
-## Guangchuang Yu.  Data Integration, Manipulation and Visualization of
-## Phylogenetic Trees (1st edition). Chapman and Hall/CRC. 2022,
-## doi:10.1201/9781003279242</code></pre>
-<pre><code>## 
-## Attaching package: &#39;ggtree&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:nlme&#39;:
-## 
-##     collapse</code></pre>
-<pre><code>## The following object is masked from &#39;package:ape&#39;:
-## 
-##     rotate</code></pre>
 <p>load files</p>
 <pre class="r"><code>phy&lt;- read.nexus(&quot;tree/output.nex&quot;)
 consensus&lt;-consensus.edges(phy, consensus.tree=consensus(phy,p=0.5))  #ape for majority rule consensus
