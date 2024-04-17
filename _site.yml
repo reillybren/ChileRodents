@@ -1,0 +1,21 @@
+name: "Spillover risk in a host-ectoparasite network"
+navbar:
+  title: "Spillover risk in a host-ectoparasite network"
+  left:
+    - text: "About"
+      href: index.html
+    - text: "Rodent Richness Maps"
+      href: Maps.html
+    - text: "Rodent Phylogeny"
+      href: Phylogeny.html
+    - text: "Ectoparasite Sharing: Geographic Range"
+      href: GeoProb.html
+    - text: "Ectoparasite Sharing: Phylogenetic Relatedness"
+      href: GenProb.html
+    - text: "Rodent-Ectoparasite Network"
+      href: Network.html
+    - text: "Network Analysis: Mantel Tests"
+      href: Mantel.html
+    - text: "Network Analysis: Closeness Centrality"
+      href: Closcen.html
+
